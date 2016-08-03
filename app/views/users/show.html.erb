@@ -1,5 +1,28 @@
 <h1>
-  <%# ヘルパーの使用 app/helpers %>
-  <%= gravatar_for @user %>
-  <%= @user.name %>
+  <div class="col-md-6 col-md-offset-3">
+    <%# ヘルパーの使用 app/helpers %>
+    <%= gravatar_for(@user) %>
+    <%= @user.name %>
+  </div>
 </h1>
+<iv class="container-fluid">
+  <div class ="col-md-6 col-md-offset-3">
+    <%= form_for(@user) do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control", readonly: true %>
+      
+      <% if current_user?(@user) %>
+
+        <%= f.label :email %>
+        <%= f.text_field :email, class: "form-control", readonly: true %>
+      
+      <% end %>
+      
+      <%= f.label :remarks %>
+      <%= f.text_area :remarks, class: "form-control", rows: 5, readonly: true %>
+    <% end %>
+  </div>
+  <div class="col-md-6 col-md-offset-3">
+    <%= link_to "Do you want to edit?", edit_user_path if current_user?(@user) %>
+  </div>
+</div>
