@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   #アプリケーションで使用するテーブルを指定
   resources :users
   resources :microposts
+  resources :relationships, only: [:create, :destroy]
 end

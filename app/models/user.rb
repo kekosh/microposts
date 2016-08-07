@@ -23,4 +23,32 @@ class User < ActiveRecord::Base
                       
   #id一つに付き複数のデータを保持する。
   has_many :microposts
+  
+  has_many :following_relationships, class_name: "Relationship",
+                                    foreign_key: "follower_id",
+                                    dependent: :destroy
+                                    
+  has_many :following_users, through: :following_relationships, source: :followed
+  
+  has_many :follower_relationships, class_name: "Relationship",
+                                    foreign_key: "followed_id",
+                                    dependent: :destroy
+  
+  has_many :follower_users, through: :follower_relationships, source: :follower
+  
+  #ユーザーを検索し、未フォローの場合はフォローを追加する
+  def follow(other_user)
+    following_relationships.find_or_create_by(followed_id: other_user.id)
+  end
+  
+  #フォローしているユーザーならば削除する
+  def unfollow(other_user)
+    following_relationship = following_relationships.find_by(followed_id: other_user.id)
+    following_relationship.destroy if following_relationship
+  end
+  
+  #ユーザーをフォローしているか確認
+  def following?(other_user)
+    following_users.include?(other_user)
+  end
 end
