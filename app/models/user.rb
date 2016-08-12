@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   validates :remarks, length: { minimum: 2, maximum: 200 },
                       allow_blank: true, on: :update
                       
-  #id一つに付き複数のデータを保持する。
+  #id一つに付き複数のデータと紐づく。
   has_many :microposts
   
   has_many :following_relationships, class_name: "Relationship",

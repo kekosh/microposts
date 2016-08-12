@@ -5,8 +5,16 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   
+  #課題
+  # get 'users/:id/followings', to: 'users#followings'
+  # get 'users/:id/followers', to: 'users#followers'
+  
   #アプリケーションで使用するテーブルを指定
-  resources :users
+  resources :users do
+    member do
+      get :followings, :followers
+    end
+  end
   resources :microposts
   resources :relationships, only: [:create, :destroy]
 end
