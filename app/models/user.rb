@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
   
   has_many :follower_users, through: :follower_relationships, source: :follower
   
+  has_many :favorites, dependent: :destroy
+  
+  has_many :favorite_posts, through: :favorites, source: :micropost
+  
   #ユーザーを検索し、未フォローの場合はフォローを追加する
   def follow(other_user)
     following_relationships.find_or_create_by(followed_id: other_user.id)

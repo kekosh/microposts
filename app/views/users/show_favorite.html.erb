@@ -1,0 +1,11 @@
+<div class="row">
+  <aside class="col-md-4">
+    <%= render 'user_info' %>
+  </aside>
+  <div class="col-md-8">
+    <h3><%= @title %> (<%= @favorites.count %>)</h3>
+    <ol class="microposts">
+      <%= render @favorites %>
+    </ol>
+  </div>
+</div>
